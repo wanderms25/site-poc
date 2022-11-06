@@ -1,4 +1,2 @@
-# site-poc
-Site simples para POC CI/CD
-First Commit
-Second commit
+# site-poc-uzi
+Site para POC Uziel Jr.

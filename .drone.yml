@@ -1,0 +1,51 @@
+kind: pipeline
+type: kubernetes
+name: MINHA PIPE 
+
+
+######################################################   trigger
+trigger:
+  branch:
+  - main
+  when:
+    event:
+      exclude:
+      - pull_request   
+
+
+###################################################   build-push
+steps:
+- name: build-push
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run  
+  privileged: true
+  commands:
+  - sleep 5 ## give docker enough time to start
+  - docker login -u uzieljr -p zairaf00270027
+  - docker build  -t uzieljr/poc-site:${DRONE_COMMIT_SHA:0:7} .
+  - docker push uzieljr/poc-site:${DRONE_COMMIT_SHA:0:7}
+
+
+######################################################   Delivery
+- name: delivery
+  image: uzieljr/plugin-drone:1.0
+  commands:
+  - git clone git@github.com:uzielferreira/CD-poc-uzi.git
+  - cd CD-poc-uzi
+  - sed -E -i.bak 's%(uzieljr/poc-site:).*%uzieljr/poc-site:${DRONE_COMMIT_SHA:0:7}%' site-helm/templates/uzi-poc-site-deployment.yml
+  - git add . && git commit -m "Change image site-poc to uzieljr/poc-site:${DRONE_COMMIT_SHA:0:7}" && git push
+
+
+########################################################   Services   
+services:
+- name: docker
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
+volumes:
+- name: dockersock
+  temp: {}
