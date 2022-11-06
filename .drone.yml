@@ -30,7 +30,7 @@ steps:
 
 ######################################################   Delivery
 - name: delivery
-  image: uzieljr/plugin-drone:2.0
+  image: uzieljr/plugin-drone:3.0
   commands:
   - git clone git@github.com:uzieljr/deploy-applications.git
   - cd deploy-applications 
