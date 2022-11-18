@@ -30,7 +30,7 @@ steps:
 
 ######################################################   Delivery
 - name: delivery
-  image: uzieljr/plugin-drone:5.0
+  image: wanderms25/plugin-drone:git
   commands:
   - git clone git@github.com:wanderms25/deploy-applications.git
   - cd deploy-applications 
