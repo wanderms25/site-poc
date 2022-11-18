@@ -11,6 +11,7 @@ trigger:
     event:
       exclude:
       - pull_request   
+      
 
 
 ###################################################   build-push
