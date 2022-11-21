@@ -12,6 +12,7 @@ trigger:
       exclude:
       - pull_request   
       
+      
 
 
 ###################################################   build-push
